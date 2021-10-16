@@ -3,6 +3,7 @@
 
 /*Custom Settings */
 static const int offset_top = 5;
+static const float width = 0.991;
 
 static int topbar = 1; /* -b  option; if 0, dmenu appears at bottom     */
 /* -fn option overrides fonts[0]; default X11 font or font set */

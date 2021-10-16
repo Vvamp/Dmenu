@@ -1,0 +1,4 @@
+.vscode*
+dmenu
+*.1
+*.o

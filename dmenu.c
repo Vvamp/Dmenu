@@ -132,7 +132,7 @@ drawitem(struct item *item, int x, int y, int w)
 	else
 		drw_setscheme(drw, scheme[SchemeNorm]);
 
-	return drw_text(drw, x, y, w, bh * multiplier, lrpad / 2, item->text, 0);
+	return drw_text(drw, x, y, w, bh * multiplier * 1.22, lrpad / 2, item->text, 0);
 }
 
 static void
@@ -183,7 +183,7 @@ drawmenu(void)
 		}
 		x += w;
 		for (item = curr; item != next; item = item->right)
-			x = drawitem(item, x, 0, MIN(TEXTW(item->text), mw - x - TEXTW(">")));
+			x = drawitem(item, x, 0, MIN(TEXTW(item->text), mw - x - TEXTW(">"))); // hele blok
 		if (next)
 		{
 			w = TEXTW(">");
@@ -740,9 +740,9 @@ setup(void)
 				if (INTERSECT(x, y, 1, 1, info[i]))
 					break;
 
-		x = info[i].x_org;
 		y = info[i].y_org + (topbar ? offset_top : info[i].height - mh - offset_top);
-		mw = info[i].width;
+		mw = info[i].width * width;
+		x = info[i].x_org + (info[i].width - mw) / 2;
 		XFree(info);
 	}
 	else
@@ -751,7 +751,7 @@ setup(void)
 		if (!XGetWindowAttributes(dpy, parentwin, &wa))
 			die("could not get embedding window attributes: 0x%lx",
 				parentwin);
-		x = 0;
+		x = (wa.width - (wa.width * width)) / 2;
 		y = topbar ? offset_top : wa.height - mh - offset_top;
 		mw = wa.width;
 	}
